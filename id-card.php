@@ -105,7 +105,7 @@
     
     <link rel="icon" type="image/png" href="images/favicon.png"/>
 
-    <title>Card Generation | Coding Cush Technology</title>
+    <title>Card Generation</title>
        <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
