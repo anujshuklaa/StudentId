@@ -1,4 +1,6 @@
+
 <?php  
+
 // Connect to the Database 
 include('config.php');
 
@@ -7,6 +9,8 @@ $update = false;
 $empty = false;
 $delete = false;
 $already_card = false;
+
+
 
 if(isset($_GET['delete'])){
   $sno = $_GET['delete'];
@@ -53,10 +57,21 @@ else{
         }
         else{
 
-  // Sql query to be executed
-  $sql = "INSERT INTO `cards`(`name`, `id_no`, `email`, `phone`, `address`, `dob`,  `image`) VALUES ('$name','$id_no','$email]','$phone','$address','$dob')"; 
 
-   $sql = "INSERT INTO `cards` (`name`, `id_no`) VALUES ('$name', '$id_no')";
+          // image upload 
+          $uploaddir = 'assets/uploads/';
+          $uploadfile = $uploaddir . basename($_FILES['image']['name']);
+
+      
+          if (move_uploaded_file($_FILES['image']['tmp_name'], $uploadfile)) {
+              
+          } else {
+              echo "Possible file upload attack!\n";
+          }
+  // Sql query to be executed
+  $sql = "INSERT INTO `cards`(`name`, `id_no`, `email`, `phone`, `address`, `dob`, `image`) VALUES ('$name','$id_no','$email]','$phone','$address','$dob','$uploadfile')"; 
+
+  // $sql = "INSERT INTO `cards` (`name`, `id_no`) VALUES ('$name', '$id_no')";
   $result = mysqli_query($conn, $sql);
 
 
@@ -82,23 +97,14 @@ else{
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <!-- CSS --> 
 
-  <style>
-    nav ul li a {
-            display: block;
-            color: white;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none; }
-  </style>
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="icon" type="image/png" href="images/favicon.png"/>
-  <title>FGIET Raebareli </title>
+  <title> FGIET Students Data</title>
 
 </head>
 
@@ -123,6 +129,7 @@ else{
               <label for="name">Student Name</label>
               <input type="text" class="form-control" id="nameEdit" name="nameEdit">
             </div>
+
             <div class="form-group">
               <label for="desc">Roll Number:</label>
               <input class="form-control" id="id_noEdit" name="id_noEdit" rows="3"></input>
@@ -136,42 +143,43 @@ else{
       </div>
     </div>
   </div>
+
 <!-- Navigation bar start  -->
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-image: linear-gradient(to right, rgb(0,300,255), rgb(93,4,217));">
   <a class="navbar-brand" href="#"><img src="assets/images/codingcush-logo.png" alt=""></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
+
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-    <li><a>Feroze Gandhi Institute of Engineering and Technology</a></li>
-      <!-- <li class="nav-item active">
+      <li class="nav-item active">
         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
+      <!-- </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Link</a>
       </li> -->
       <!-- <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Dropdown
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        </a> -->
+        <!-- <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="#">Action</a>
           <a class="dropdown-item" href="#">Another action</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </li> -->
+        </div> 
+      </li>-->
       <!-- <li class="nav-item">
         <a class="nav-link disabled" href="#">Disabled</a>
       </li> -->
     </ul>
-    <!-- <form class="form-inline my-2 my-lg-0">
+    <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form> -->
+    </form>
   </div>
-</nav> 
+</nav>
 <!-- Navigation bar end  -->
 
   <?php
@@ -234,6 +242,7 @@ else{
 </p>
 <div class="collapse" id="collapseExample">
   <div class="card card-body">
+
     <form method="POST" enctype="multipart/form-data">
     <div class="form-row">
       <div class="form-group col-md-6">
@@ -241,9 +250,9 @@ else{
         <input type="text" name="name" class="form-control" id="inputCity">
       </div>
       <div class="form-group col-md-4">
-        <label for="inputState">Branch / Section</label>
+        <label for="inputState">Branch/Section </Section></label>
         <select name="grade" class="form-control">
-          <option selected>Choose...</option>
+        <option selected>Choose...</option>
           <option value="1st">CSE A</option>
           <option value="2nd">CSE B</option>
           <option value="3rd">AE A</option>
@@ -264,19 +273,13 @@ else{
         <label for="inputCity">Address</label>
         <input type="text" name="address" class="form-control">
       </div>
-      <!-- <div class="form-group col-md-4">
+      <div class="form-group col-md-4">
         <label for="inputState">Email Id</label>
         <input type="text" name="email" class="form-control">
-      </div> -->
-    <div class="form-group col-md-4">
-    <label for="emailInput">Email Id</label>
-    <input type="email" name="email" id="emailInput" class="form-control" placeholder="Enter your email" required aria-describedby="emailHelp">
-    
-</div>
-    </div>
-        <div class="form-row">
+      </div>
+      <div class="form-row">
         <div class="form-group col-md-3">
-          <label for="id_no">Roll Number</label>
+          <label for="id_no">Roll No</label>
           <input class="form-control" id="id_no" name="id_no" ></input>
         </div>
         <div class="form-group col-md-3">
@@ -292,13 +295,16 @@ else{
     </form>
   </div>
 </div>
+
   <div class="container my-4">
+
+
     <table class="table" id="myTable">
       <thead>
         <tr>
           <th scope="col">S.No</th>
           <th scope="col">Name</th>
-          <th scope="col">Roll Num</th>
+          <th scope="col">Roll No.</th>
           <th scope="col">Actions</th>
         </tr>
       </thead>
@@ -317,6 +323,8 @@ else{
           </tr>";
         } 
           ?>
+
+
       </tbody>
     </table>
   </div>
